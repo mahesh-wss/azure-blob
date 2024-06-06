@@ -1,4 +1,5 @@
 require("dotenv").config();
+const { DefaultAzureCredential } = require("@azure/identity");
 const {
   BlobServiceClient,
   StorageSharedKeyCredential,
@@ -7,10 +8,15 @@ const {
 const account = process.env.ACCOUNT || "";
 const accountKey = process.env.ACCOUNTKEY || "";
 
-const sharedKeyCredential = new StorageSharedKeyCredential(account, accountKey);
+// const sharedKeyCredential = new StorageSharedKeyCredential(account, accountKey);
+// const blobServiceClient = new BlobServiceClient(
+//   `https://${account}.blob.core.windows.net`,
+//   sharedKeyCredential
+// );
+
 const blobServiceClient = new BlobServiceClient(
   `https://${account}.blob.core.windows.net`,
-  sharedKeyCredential
+  new DefaultAzureCredential()
 );
 
 const containerName = process.env.CONTAINER || "";
